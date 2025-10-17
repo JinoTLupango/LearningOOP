@@ -1,14 +1,19 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 
-class Animal
+// Abstract class
+abstract class Animal
 {
-    public virtual void Sound()
+    // Abstract method (no implementation here)
+    public abstract void Sound();
+
+    // Non-abstract method (optional)
+    public void Eat()
     {
-        Console.WriteLine("Animal makes a sounds");
+        Console.WriteLine("This animal eats food.");
     }
-    
 }
+
+// Derived class Dog
 class Dog : Animal
 {
     public override void Sound()
@@ -16,6 +21,8 @@ class Dog : Animal
         Console.WriteLine("Dog AWWSSS.");
     }
 }
+
+// Derived class Cat
 class Cat : Animal
 {
     public override void Sound()
@@ -23,6 +30,8 @@ class Cat : Animal
         Console.WriteLine("Cat Meowss.");
     }
 }
+
+// Main program
 class Program
 {
     public static void Main()
@@ -30,11 +39,11 @@ class Program
         Animal animal;
 
         animal = new Dog();
-        animal.Sound();
+        animal.Sound();  // Output: Dog AWWSSS.
+        animal.Eat();    // Output: This animal eats food.
 
         animal = new Cat();
-        animal.Sound();
+        animal.Sound();  // Output: Cat Meowss.
+        animal.Eat();    // Output: This animal eats food.
     }
-   
-
 }
