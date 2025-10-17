@@ -1,29 +1,39 @@
 ﻿using System;
 
-class Person
+class Animal
 {
-    private string name;
-    private int age;
-
-    public string Name
+    public void Eat()
     {
-        get { return name; }
-        set { name = value; }
-    }
-    public int Age
-    {
-        get { return age; }
-        set { age = value; }
+        Console.WriteLine("This animal eats food.");
     }
 }
+
+// Dog inherits from Animal
+class Dog : Animal
+{
+    public void Bark()
+    {
+        Console.WriteLine("The dog barks!");
+    }
+}
+
+class Cat : Animal
+{
+    public void Cuttie()
+    {
+        Console.WriteLine("The cat Cuttie");
+    }
+}
+
 class Program
 {
     static void Main()
     {
-        Person person = new Person();
-        person.Name = "Jino Lupango"; //set siya value
-        person.Age = 25;
-        Console.WriteLine("Hello, " + person.Name + "!");
-        Console.WriteLine("Your are, " + person.Age + " Years Old!");
+        Dog myDog = new Dog();
+        myDog.Eat();   
+        myDog.Bark();
+        Cat cat = new Cat();
+        cat.Eat();
+        cat.Cuttie();
     }
 }
