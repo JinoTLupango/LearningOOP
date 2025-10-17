@@ -1,29 +1,40 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
-class Person
+class Animal
 {
-    private string name;
-    private int age;
-
-    public string Name
+    public virtual void Sound()
     {
-        get { return name; }
-        set { name = value; }
+        Console.WriteLine("Animal makes a sounds");
     }
-    public int Age
+    
+}
+class Dog : Animal
+{
+    public override void Sound()
     {
-        get { return age; }
-        set { age = value; }
+        Console.WriteLine("Dog AWWSSS.");
+    }
+}
+class Cat : Animal
+{
+    public override void Sound()
+    {
+        Console.WriteLine("Cat Meowss.");
     }
 }
 class Program
 {
-    static void Main()
+    public static void Main()
     {
-        Person person = new Person();
-        person.Name = "Jino Lupango"; //set siya value
-        person.Age = 25;
-        Console.WriteLine("Hello, " + person.Name + "!");
-        Console.WriteLine("Your are, " + person.Age + " Years Old!");
+        Animal animal;
+
+        animal = new Dog();
+        animal.Sound();
+
+        animal = new Cat();
+        animal.Sound();
     }
+   
+
 }
