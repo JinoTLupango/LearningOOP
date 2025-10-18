@@ -9,13 +9,13 @@ namespace LearningOOP
     public class User
     {
         //  Encapsulation: Private fields
-        private int Id { get; set; }
-        private string Name { get; set; }
-        private int Age {  get; set; }
-        private string Course { get; set; }
-        private string Address { get; set; }
-        private string Email { get; set; }
-
+        public int Id { get; private set; }
+        public string Name { get; private set; }
+        public int Age {  get; private set; }
+        public string Course { get; private set; }
+        public string Address { get; private set; }
+        public string Email { get; private set; }
+            
         //  Constructor
         public User(int id, string name, int age,string course, string address, string email)
         {
@@ -37,6 +37,17 @@ namespace LearningOOP
             Console.WriteLine($"Course: {Course}");
             Console.WriteLine($"Address: {Address}");
             Console.WriteLine($"Email: {Email}");
+        }
+
+        public void UpdateInfo(string name,int age, string course,string address,string email)
+        {
+            Name= name;
+            Age= age;
+            Course= course;
+            Address= address;
+            Email= email;
+
+
         }
     }
 }

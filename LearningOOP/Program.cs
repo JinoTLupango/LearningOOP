@@ -6,38 +6,119 @@ namespace LearningOOP
 {
     class Program
     {
+        static List<User> users = new List<User>();
         static void Main(string[] args)
         {
-            List<User> users = new List<User>();
+            bool running = true;
 
-            Console.Write("How many users do you want to add? ");
-            int count = Convert.ToInt32(Console.ReadLine());
-
-            for (int i = 0; i < count; i++)
+            while (running)
             {
-                Console.WriteLine($"\n--- Enter details for User #{i + 1} ---");
+                Console.Clear();
+                Console.WriteLine("==== USER MANAGEMENT SYSTEM ===");
+                Console.WriteLine("[1] Add User");
+                Console.WriteLine("[2] View All Users");
+                Console.WriteLine("[3] Search User");
+                Console.WriteLine("[4] Update User");
+                Console.WriteLine("[5] Delete User");
+                Console.WriteLine("[0] Exit");
+                Console.Write("Select an Option: ");
 
-                int id = GetIntInput("Enter ID: ");
-                string name = GetStringInput("Enter Name: ");
-                int age = GetIntInput("Enter Age: ");
-                string course = GetStringInput("Enter Course: ");
-                string address = GetStringInput("Enter Address: ");
-                string email = GetStringInput("Enter Email: ");
+                switch (Console.ReadLine())
+                {
+                    case "1":
+                        AddUser();
+                        break;
 
-                // Create and add user
-                users.Add(new User(id, name, age, course, address, email));
+                    case "2":
+                        ViewAllUsers();
+                        break;
+                    case "3":
+                        SearchUser();
+                        break;
+                    case "4":
+                        UpdateUser();
+                        break;
+                    case "5":
+                        DeleteUser();
+                        break;
+                    case "0":
+                        running = false;
+                        Console.WriteLine("Exiting System..... Goodbye! ");
+                        break;
+                    default:
+                        Console.WriteLine("Invalid choice. Try Again! ");
+                        break;
+                }
+                if (running)
+                {
+                    Console.WriteLine("\nPrss any key to return menu...");
+                    Console.ReadKey();
+                }
             }
-
-            Console.WriteLine("\n========== ALL USERS ==========");
-            foreach (var user in users)
-            {
-                user.DisplayInfo();
-            }
-
-            Console.ReadLine();
+            
         }
 
-        // Helper methods for cleaner validation
+        // add ka new user
+        static void AddUser()
+        {
+            Console.Clear();
+            Console.WriteLine("==== ADD NEW USER ====");
+            int id = GetIntInput("Enter ID: ");
+            string name = GetStringInput("Enter Name: ");
+            int age = GetIntInput("Enter Age: ");
+            string course = GetStringInput("Enter Course: ");
+            string address = GetStringInput("Enter Address: ");
+            string email = GetStringInput("Enter Email: ");
+
+            users.Add(new User(id, name, age, course, address, email));
+            Console.WriteLine("\nUser Successfully Added! ");
+        }
+
+        static void ViewAllUsers()
+        {
+            Console.Clear();
+            Console.WriteLine("==== ALL USERS ====");
+
+            if (users.Count == 0)
+            {
+                Console.WriteLine("No users found! ");
+                return;
+            }
+            foreach (var users in users)
+            {
+                users.DisplayInfo();
+                Console.WriteLine("-----------------------");
+            }
+        }
+
+        static void SearchUser()
+        {
+            Console.Clear();
+            Console.WriteLine("==== SEARCH USER ====");
+            string search = GetStringInput("Enter ID or NAME: ");
+
+            bool found = false;
+            foreach (var user in users)
+            {
+                if (user.Id.ToString() == search || user.Name.Equals((search, StringComparison.OrdinalIgnoreCase)))
+                    { 
+                
+                    }
+            }
+
+        }
+
+        static void UpdateUser()
+        {
+            Console.Clear();
+            Console.WriteLine("==== UPDATE USER ====");
+        }
+
+        static void DeleteUser()
+        {
+            Console.Clear();
+            Console.WriteLine("==== DELETE USER ====");
+        }
         static int GetIntInput(string prompt)
         {
             int value;
@@ -46,10 +127,9 @@ namespace LearningOOP
                 Console.Write(prompt);
                 if (int.TryParse(Console.ReadLine(), out value))
                     return value;
-                Console.WriteLine("Please enter a valid number!");
+                Console.WriteLine("Invalid input! Enter a valid number.");
             }
         }
-
         static string GetStringInput(string prompt)
         {
             Console.Write(prompt);
