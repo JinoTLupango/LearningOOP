@@ -112,12 +112,40 @@ namespace LearningOOP
         {
             Console.Clear();
             Console.WriteLine("==== UPDATE USER ====");
+
+            int id = GetIntInput("Enter ID to update: ");
+            var user = users.Find(u => u.Id == id);
+            if (user == null)
+            {
+                Console.WriteLine("User not found!");
+                    return ;
+            }
+            string name = GetStringInput("Enter new Name: ");
+            int age = GetIntInput("Enter new Age: ");
+            string course = GetStringInput("Enter new Course: ");
+            string address = GetStringInput("Enter new Address: ");
+            string email = GetStringInput("Enter new Email: ");
+
+            user.UpdateInfo(name, age, course, address, email);
+            Console.WriteLine("\nUser updated successfully!");
         }
 
         static void DeleteUser()
         {
             Console.Clear();
             Console.WriteLine("==== DELETE USER ====");
+
+            int id = GetIntInput("Enter ID to delete: ");
+            var user = users.Find(x => x.Id == id);
+            if (user != null)
+            {
+                users.Remove(user);
+                Console.WriteLine("user Deleted successfully!");
+            }
+            else
+            {
+                Console.WriteLine("User not found!");
+            }
         }
         static int GetIntInput(string prompt)
         {
