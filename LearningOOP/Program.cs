@@ -74,6 +74,7 @@ namespace LearningOOP
             Console.WriteLine("\nUser Successfully Added! ");
         }
 
+        // gi view nila ang tanan user
         static void ViewAllUsers()
         {
             Console.Clear();
@@ -90,7 +91,7 @@ namespace LearningOOP
                 Console.WriteLine("-----------------------");
             }
         }
-
+        //e search pamaagi sa Id og name sa user
         static void SearchUser()
         {
             Console.Clear();
@@ -101,13 +102,19 @@ namespace LearningOOP
             foreach (var user in users)
             {
                 if (user.Id.ToString() == search || user.Name.Equals((search, StringComparison.OrdinalIgnoreCase)))
-                    { 
-                
-                    }
+                { 
+                    user.DisplayInfo();
+                     found = true;
+                }
+                if (!found)
+                {
+                    Console.WriteLine("No user found with that ID or Name.");
+                }
             }
 
         }
 
+        //update sa info
         static void UpdateUser()
         {
             Console.Clear();
@@ -130,6 +137,7 @@ namespace LearningOOP
             Console.WriteLine("\nUser updated successfully!");
         }
 
+        //delete sa user by id
         static void DeleteUser()
         {
             Console.Clear();
@@ -147,15 +155,35 @@ namespace LearningOOP
                 Console.WriteLine("User not found!");
             }
         }
+
+        //input sa mga method
         static int GetIntInput(string prompt)
         {
             int value;
+
             while (true)
             {
                 Console.Write(prompt);
-                if (int.TryParse(Console.ReadLine(), out value))
-                    return value;
-                Console.WriteLine("Invalid input! Enter a valid number.");
+                string input = Console.ReadLine();
+
+                // Try to convert input into a number
+                if (int.TryParse(input, out value))
+                {
+                    //  Check if it's the Age prompt
+                    if (prompt.ToLower().Contains("age"))
+                    {
+                        // Check nya ang number sa edad
+                        if (value >= 100)
+                        {
+                            Console.WriteLine("Invalid Age! Age must be less than 100.\n");
+                            continue; // ask again
+                        }
+                    }
+
+                    return value; // valid number
+                }
+
+                Console.WriteLine("Invalid input! Enter a valid number.\n");
             }
         }
         static string GetStringInput(string prompt)
