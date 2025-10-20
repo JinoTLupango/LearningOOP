@@ -7,6 +7,11 @@ namespace LearningOOP
     class Program
     {
         static List<User> users = new List<User>();
+        static readonly List<string> validCourses = new List<string>
+        {
+            "BSIT", "BSN", "BSMT", "BSE", "BSA", "BSC", "BSTM"
+        };
+
         static void Main(string[] args)
         {
             bool running = true;
@@ -32,33 +37,38 @@ namespace LearningOOP
                     case "2":
                         ViewAllUsers();
                         break;
+
                     case "3":
                         SearchUser();
                         break;
+
                     case "4":
                         UpdateUser();
                         break;
+
                     case "5":
                         DeleteUser();
                         break;
+
                     case "0":
                         running = false;
-                        Console.WriteLine("Exiting System..... Goodbye! ");
+                        Console.WriteLine("Exiting System..... Goodbye!");
                         break;
+
                     default:
-                        Console.WriteLine("Invalid choice. Try Again! ");
+                        Console.WriteLine("Invalid choice. Try Again!");
                         break;
                 }
+
                 if (running)
                 {
-                    Console.WriteLine("\nPrss any key to return menu...");
+                    Console.WriteLine("\nPress any key to return to menu...");
                     Console.ReadKey();
                 }
             }
-            
         }
 
-        // add ka new user
+        // Add new user
         static void AddUser()
         {
             Console.Clear();
@@ -66,15 +76,15 @@ namespace LearningOOP
             int id = GetIntInput("Enter ID: ");
             string name = GetStringInput("Enter Name: ");
             int age = GetIntInput("Enter Age: ");
-            string course = GetStringInput("Enter Course: ");
+            string course = GetCourseInput(); // <-- uses new method for validation
             string address = GetStringInput("Enter Address: ");
             string email = GetStringInput("Enter Email: ");
 
             users.Add(new User(id, name, age, course, address, email));
-            Console.WriteLine("\nUser Successfully Added! ");
+            Console.WriteLine("\nUser Successfully Added!");
         }
 
-        // gi view nila ang tanan user
+        // View all users
         static void ViewAllUsers()
         {
             Console.Clear();
@@ -82,16 +92,18 @@ namespace LearningOOP
 
             if (users.Count == 0)
             {
-                Console.WriteLine("No users found! ");
+                Console.WriteLine("No users found!");
                 return;
             }
-            foreach (var users in users)
+
+            foreach (var user in users)
             {
-                users.DisplayInfo();
+                user.DisplayInfo();
                 Console.WriteLine("-----------------------");
             }
         }
-        //e search pamaagi sa Id og name sa user
+
+        // Search user by ID or Name
         static void SearchUser()
         {
             Console.Clear();
@@ -101,20 +113,20 @@ namespace LearningOOP
             bool found = false;
             foreach (var user in users)
             {
-                if (user.Id.ToString() == search || user.Name.Equals((search, StringComparison.OrdinalIgnoreCase)))
-                { 
-                    user.DisplayInfo();
-                     found = true;
-                }
-                if (!found)
+                if (user.Id.ToString() == search || user.Name.Equals(search, StringComparison.OrdinalIgnoreCase))
                 {
-                    Console.WriteLine("No user found with that ID or Name.");
+                    user.DisplayInfo();
+                    found = true;
                 }
             }
 
+            if (!found)
+            {
+                Console.WriteLine("No user found with that ID or Name.");
+            }
         }
 
-        //update sa info
+        // Update user info
         static void UpdateUser()
         {
             Console.Clear();
@@ -122,14 +134,16 @@ namespace LearningOOP
 
             int id = GetIntInput("Enter ID to update: ");
             var user = users.Find(u => u.Id == id);
+
             if (user == null)
             {
                 Console.WriteLine("User not found!");
-                    return ;
+                return;
             }
+
             string name = GetStringInput("Enter new Name: ");
             int age = GetIntInput("Enter new Age: ");
-            string course = GetStringInput("Enter new Course: ");
+            string course = GetCourseInput();
             string address = GetStringInput("Enter new Address: ");
             string email = GetStringInput("Enter new Email: ");
 
@@ -137,7 +151,7 @@ namespace LearningOOP
             Console.WriteLine("\nUser updated successfully!");
         }
 
-        //delete sa user by id
+        // Delete user by ID
         static void DeleteUser()
         {
             Console.Clear();
@@ -145,10 +159,11 @@ namespace LearningOOP
 
             int id = GetIntInput("Enter ID to delete: ");
             var user = users.Find(x => x.Id == id);
+
             if (user != null)
             {
                 users.Remove(user);
-                Console.WriteLine("user Deleted successfully!");
+                Console.WriteLine("User Deleted successfully!");
             }
             else
             {
@@ -156,7 +171,7 @@ namespace LearningOOP
             }
         }
 
-        //input sa mga method
+        // Integer input validation
         static int GetIntInput(string prompt)
         {
             int value;
@@ -166,30 +181,40 @@ namespace LearningOOP
                 Console.Write(prompt);
                 string input = Console.ReadLine();
 
-                // Try to convert input into a number
                 if (int.TryParse(input, out value))
                 {
-                    //  Check if it's the Age prompt
-                    if (prompt.ToLower().Contains("age"))
+                    if (prompt.ToLower().Contains("age") && value >= 100)
                     {
-                        // Check nya ang number sa edad
-                        if (value >= 100)
-                        {
-                            Console.WriteLine("Invalid Age! Age must be less than 100.\n");
-                            continue; // ask again
-                        }
+                        Console.WriteLine("Invalid Age! Age must be less than 100.\n");
+                        continue;
                     }
-
-                    return value; // valid number
+                    return value;
                 }
 
                 Console.WriteLine("Invalid input! Enter a valid number.\n");
             }
         }
+
+        // String input
         static string GetStringInput(string prompt)
         {
             Console.Write(prompt);
             return Console.ReadLine();
+        }
+
+        // Course validation method
+        static string GetCourseInput()
+        {
+            while (true)
+            {
+                Console.Write("Enter Course (BSIT, BSN, BSMT, BSE, BSA, BSC, BSTM): ");
+                string course = Console.ReadLine().ToUpper();
+
+                if (validCourses.Contains(course))
+                    return course;
+
+                Console.WriteLine("Invalid Course! Please choose from the list above.\n");
+            }
         }
     }
 }
